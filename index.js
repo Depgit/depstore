@@ -17,7 +17,6 @@ app.get('/register', (req, res) => {
 app.post('/register', async (req, res) => {
   const user = new User(req.body)
   await user.save()
-
   return res.render('register', { message: 'Registration successful' })
 })
 
