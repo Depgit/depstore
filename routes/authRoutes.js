@@ -18,19 +18,6 @@ router.get('/register', (req, res) => {
 
 router.post('/register', async (req, res) => {
   try {
-<<<<<<< HEAD
-    // validating the user input present in req.body
-    const validationResult = registerSchema.validate(req.body)
-    // if(validationResult.error){
-    //   return res.render('register', { message: 'validation error' })
-    // }
-    return res.send(validationResult)
-    const user = await addUser(req.body)
-    return res.render('register', { message: 'Registration successfull' })
-  } catch (e) {
-    console.log(e)
-    return res.send(e)
-=======
     // // validating the user input present in req.body
     // const validationResult = registerSchema.validate(req.body , {
     //   abortEarly : false
@@ -45,7 +32,6 @@ router.post('/register', async (req, res) => {
   } catch (e) {
     console.error(e)
     return res.send(mongooseErrorFormater(e))
->>>>>>> day_10
     return res.status(400).render('register', { message: 'Something went wrong' })
   }
 })
