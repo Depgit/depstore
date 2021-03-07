@@ -1,5 +1,4 @@
 const User = require('../models/User')
-
 /**
  *
  * create a new user and return it

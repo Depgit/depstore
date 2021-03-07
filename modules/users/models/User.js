@@ -10,6 +10,7 @@ const userSchema = mongoose.Schema({
   },
   email: {
     type: String,
+    lowercase: true,
     require: [true, 'Email is require'],
     maxlength: [128, "Email can't be greater then 128 char"],
     index: true
@@ -30,8 +31,9 @@ const userSchema = mongoose.Schema({
   timestamps: true
 })
 
+// before exporting User schema encrypt the password so other could'nt be able to see neither i
 userSchema.pre('save', async function (next) {
-  // do stuff
+  // this.() is refrence to current schema
   if (!this.isModified('password')) next()
   this.password = await bcrypt.hash(this.password, 10)
   console.log(this.password)
