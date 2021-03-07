@@ -19,14 +19,15 @@ router.post('/register', async (req, res) => {
   try {
     // validating the user input present in req.body
     const validationResult = registerSchema.validate(req.body)
-    if(validationResult.error){
-      return res.render('register', { message: 'validation error' })
-    }
+    // if(validationResult.error){
+    //   return res.render('register', { message: 'validation error' })
+    // }
     return res.send(validationResult)
     const user = await addUser(req.body)
     return res.render('register', { message: 'Registration successfull' })
   } catch (e) {
     console.log(e)
+    return res.send(e)
     return res.status(400).render('register', { message: 'Something went wrong' })
   }
 })
