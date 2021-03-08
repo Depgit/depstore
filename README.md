@@ -1,4 +1,18 @@
 # Ecommerce website
+
+<h1>in process</h1>
+
+for installing dependency
+```
+npm install
+```
+
+to run 
+make sure mongodb is running as it set as localhost
+```
+npm run serve:local
+
+```
 <pre>
 creating fully functional ecommerce website backend
 
