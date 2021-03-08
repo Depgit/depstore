@@ -8,4 +8,4 @@ mongoose.connection.once('open', () => {
   console.log('Connected to db')
 })
 
-module.exports = mongoose.connect
+module.exports = mongoose.connection

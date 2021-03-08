@@ -9,6 +9,7 @@ const mongoDbConnection = require('./utils/db.config')
 const passport = require('passport')
 // to let passport know we have a strategy(means login in with facebook google or local i.e user or passsword)
 require('./utils/authStrategies/localStrategy')
+const authMiddleware = require('./middlewares/authMiddleware')
 
 const authRoutes = require('./routes/authRoutes')
 
@@ -27,7 +28,7 @@ app.use(session({
   cookie: { secure: false },
   store: MongoStore.create({
     // mongoConnection: mongoDbConnection
-    mongoUrl: 'mongodb://localhost/x-store'
+    mongoUrl: 'mongodb://localhost:27017/x-store'
   })
 }))
 
@@ -37,7 +38,7 @@ app.use(passport.session())
 
 app.use('/', authRoutes)
 
-app.get('/', (req, res) => {
+app.get('/', authMiddleware, (req, res) => {
   req.session.views = (req.session.views || 0) + 1
   console.log(`${req.user}`)
   return res.render('index')
