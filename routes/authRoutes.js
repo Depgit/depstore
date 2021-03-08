@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-vars */
 const express = require('express')
 const router = express.Router()
 const { addUser } = require('../modules/users/service/userService')
 const { registerSchema } = require('../modules/users/validations/authValidation')
 const { joiErrorFormatter, mongooseErrorFormater } = require('../utils/validationFormator')
+const passport = require('passport')
 
 /**
  * Shows page for user registration
@@ -75,7 +77,10 @@ router.get('/login', (req, res) => {
  * Login in a user
  */
 
-router.post('/login', (req, res) => {
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/login-success',
+  failureRedirect: '/login-failer'
+}), (req, res) => {
   return res.render('login', {
     message: {
       type: 'success',
@@ -85,4 +90,5 @@ router.post('/login', (req, res) => {
     formData: {}
   })
 })
+
 module.exports = router
