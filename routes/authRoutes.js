@@ -11,7 +11,7 @@ const guestMiddleware = require('../middlewares/geustMiddleware')
  * Shows page for user registration
  */
 
-router.get('/register', guestMiddleware, (req, res) => {
+router.get('/register', (req, res) => {
   return res.render('register', {
     message: {},
     errors: {},
