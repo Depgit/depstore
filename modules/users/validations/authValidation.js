@@ -11,7 +11,7 @@ const registerSchema = Joi.object({
   password: Joi.string()
     .required(),
 
-  reset_password: Joi.ref('password'),
+  repeat_password: Joi.ref('password'),
 
   email: Joi.string()
     .trim()

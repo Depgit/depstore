@@ -9,7 +9,11 @@ const { joiErrorFormatter, mongooseErrorFormater } = require('../utils/validatio
  */
 
 router.get('/register', (req, res) => {
-  return res.render('register', { message: null })
+  return res.render('register', {
+    message: {},
+    errors: {},
+    formData: {}
+  })
 })
 
 /**
@@ -18,21 +22,40 @@ router.get('/register', (req, res) => {
 
 router.post('/register', async (req, res) => {
   try {
-    // // validating the user input present in req.body
-    // const validationResult = registerSchema.validate(req.body , {
-    //   abortEarly : false
-    // })
-    // if (validationResult.error) {
-    //   return res.send(joiErrorFormatter(validationResult.error))
-    //   return res.render('register', { message: 'validation error' })
-    // }
-    // return res.send(validationResult)
+    // validating the user input present in req.body
+    const validationResult = registerSchema.validate(req.body, {
+      abortEarly: false
+    })
+    if (validationResult.error) {
+      console.log(joiErrorFormatter(validationResult.error))
+      return res.render('register', {
+        message: {
+          type: 'error',
+          body: 'Validation Errors'
+        },
+        errors: joiErrorFormatter(validationResult.error),
+        formData: req.body
+      })
+    }
     const user = await addUser(req.body)
-    return res.render('register', { message: 'Registration successfull' })
+    return res.render('register', {
+      message: {
+        type: 'success',
+        body: 'successfully registered'
+      },
+      errors: {},
+      formData: req.body
+    })
   } catch (e) {
     console.error(e)
-    return res.send(mongooseErrorFormater(e))
-    return res.status(400).render('register', { message: 'Something went wrong' })
+    return res.status(400).render('register', {
+      message: {
+        type: 'error',
+        body: 'Validation Errors'
+      },
+      errors: mongooseErrorFormater(e),
+      formData: req.body
+    })
   }
 })
 
