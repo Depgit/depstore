@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 const express = require('express')
+const app = express()
 const session = require('express-session')
 const bodyParser = require('body-parser')
 require('./utils/db.config')
@@ -13,13 +14,10 @@ const authMiddleware = require('./middlewares/authMiddleware')
 
 const authRoutes = require('./routes/authRoutes')
 
-const app = express()
-
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.set('view engine', 'ejs')
 
-// // for session storage to check how many times user coming like local storage
 // app.set('trust proxy', 1) // trust first proxy
 app.use(session({
   secret: 'f60e4013df4fd720a290f16ddd4f0cd1e2bf4769',
@@ -27,7 +25,6 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: false },
   store: MongoStore.create({
-    // mongoConnection: mongoDbConnection
     mongoUrl: 'mongodb://localhost:27017/x-store'
   })
 }))
@@ -35,6 +32,11 @@ app.use(session({
 // initialize passport for front end
 app.use(passport.initialize())
 app.use(passport.session())
+
+app.locals.message = {}
+app.locals.errors = {}
+app.locals.formData = {}
+// { message: {}, errors: {}, formData: {} }
 
 app.use('/', authRoutes)
 

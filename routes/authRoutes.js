@@ -11,19 +11,15 @@ const guestMiddleware = require('../middlewares/geustMiddleware')
  * Shows page for user registration
  */
 
-router.get('/register', (req, res) => {
-  return res.render('register', {
-    message: {},
-    errors: {},
-    formData: {}
-  })
+router.get('/register', guestMiddleware, (req, res) => {
+  return res.render('register')
 })
 
 /**
  * Handles user registration
  */
 
-router.post('/register', async (req, res) => {
+router.post('/register', guestMiddleware, async (req, res) => {
   try {
     // validating the user input present in req.body
     const validationResult = registerSchema.validate(req.body, {
@@ -66,12 +62,8 @@ router.post('/register', async (req, res) => {
  * Shows page for user login
  */
 
-router.get('/login', guestMiddleware, (req, res) => {
-  return res.render('login', {
-    message: {},
-    errors: {},
-    formData: {}
-  })
+router.get('/login', (req, res) => {
+  return res.render('login')
 })
 
 /**
