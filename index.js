@@ -19,6 +19,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.set('view engine', 'ejs')
 app.use(logger('dev'))
+
+app.use(express.static('public'))
 // app.set('trust proxy', 1) // trust first proxy
 app.use(session({
   secret: 'f60e4013df4fd720a290f16ddd4f0cd1e2bf4769',
@@ -45,6 +47,10 @@ app.get('/', authMiddleware, (req, res) => {
   req.session.views = (req.session.views || 0) + 1
   console.log(`${req.user}`)
   return res.render('index')
+})
+
+app.use((req, res, next) => {
+  res.status(404).render('404')
 })
 
 app.listen(3000, function () {
