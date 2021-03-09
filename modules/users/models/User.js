@@ -31,12 +31,20 @@ const userSchema = mongoose.Schema({
   timestamps: true
 })
 
-// before exporting User schema encrypt the password so other could'nt be able to see neither i
+/**
+ * Validates Unique email
+ */
+userSchema.path('email').validate(async (email) => {
+  const emailCount = await mongoose.models.users.countDocuments({ email })
+  return !emailCount
+}, 'Email is already exist')
+
+/**
+ * Encrypt password if value is changed
+ */
 userSchema.pre('save', async function (next) {
-  // this.() is refrence to current schema
   if (!this.isModified('password')) next()
   this.password = await bcrypt.hash(this.password, 10)
-  // console.log(this.password)
   next()
 })
 
