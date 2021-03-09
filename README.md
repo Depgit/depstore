@@ -6,13 +6,15 @@ for installing dependency
 ```
 npm install
 ```
-
+```
+change the name of '.env.example' file  to '.env' before running
+```
 to run 
 make sure mongodb is running as it set as localhost
 ```
 npm run serve:local
-
 ```
+
 <pre>
 creating fully functional ecommerce website backend
 
