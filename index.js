@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 const express = require('express')
 const app = express()
+const logger = require('morgan')
 const session = require('express-session')
 const bodyParser = require('body-parser')
 require('./utils/db.config')
@@ -17,7 +18,7 @@ const authRoutes = require('./routes/authRoutes')
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.set('view engine', 'ejs')
-
+app.use(logger('dev'))
 // app.set('trust proxy', 1) // trust first proxy
 app.use(session({
   secret: 'f60e4013df4fd720a290f16ddd4f0cd1e2bf4769',
