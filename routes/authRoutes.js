@@ -40,7 +40,7 @@ router.post('/register', guestMiddleware, async (req, res) => {
       return res.redirect('/register')
     }
     const user = await addUser(req.body)
-    return res.render('register', {
+    return res.render('index', {
       message: {
         type: 'success',
         body: 'successfully registered'
@@ -58,7 +58,7 @@ router.post('/register', guestMiddleware, async (req, res) => {
       errors: {},
       formData: req.body
     }
-    return res.redirect('register')
+    return res.redirect('/register')
   }
 })
 
@@ -107,7 +107,7 @@ router.post('/login', guestMiddleware, (req, res, next) => {
           }
         }
       }
-      return res.redirect('/dashboard')
+      return res.redirect('/')
     })
   })(req, res, next)
 })
