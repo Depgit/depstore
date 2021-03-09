@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const logger = require('morgan')
@@ -7,7 +8,7 @@ const bodyParser = require('body-parser')
 require('./utils/db.config')
 const MongoStore = require('connect-mongo').default
 const mongoDbConnection = require('./utils/db.config')
-
+const config = require('./utils/config')
 const passport = require('passport')
 // to let passport know we have a strategy(means login in with facebook google or local i.e user or passsword)
 require('./utils/authStrategies/localStrategy')
@@ -28,7 +29,7 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: false },
   store: MongoStore.create({
-    mongoUrl: 'mongodb://localhost:27017/x-store'
+    mongoUrl: config.mongoUrl
   })
 }))
 
@@ -53,8 +54,8 @@ app.use((req, res, next) => {
   res.status(404).render('404')
 })
 
-app.listen(3000, function () {
-  console.log('server running at port 3000')
+app.listen(config.port, function () {
+  console.log('server running at port ', config.port)
 })
 
 module.exports = app
